@@ -22,9 +22,18 @@ func _ready():
 	
 func _process(delta):
 	if Input.is_action_just_pressed("ui_left"):
+		for line in board:
+			line.invert()
+			slide(line)
+			line.invert()
+		update_board()
+		new_tile()
 		pass
 	elif Input.is_action_just_pressed("ui_right"):
-		pass
+		for line in board:
+			slide(line)
+		update_board()
+		new_tile()	
 	elif Input.is_action_just_pressed("ui_up"):
 		pass
 	elif Input.is_action_just_pressed("ui_down"):
@@ -46,6 +55,7 @@ func new_tile(value: int = 0):
 	var i = value
 	if value == 0: i = create_random_value()
 	set_element(position, i)
+	update_board()
 	
 func create_random_position() -> Vector2:
 	var position = Vector2(
@@ -71,3 +81,15 @@ func get_element(pos:Vector2) -> int:
 
 func set_element(pos: Vector2, value: int):
 	board[pos.x][pos.y] = value
+	
+func slide(line: Array):
+	for n in range(1, 4):
+		var i = width - 2
+		while i >= 0:
+			if line[i + 1] == 0:
+				line[i + 1] = line[i]
+				line[i] = 0
+			elif line[i + 1] == line[i]:
+				line[i + 1] = line[i + 1] * 2
+				line[i] = 0
+			i = i - 1
