@@ -1,7 +1,14 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Fonts/OpenSans-Bold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/Tile.gd" type="Script" id=2]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.803922, 0.756863, 0.705882, 1 )
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="DynamicFont" id=1]
 size = 24
@@ -15,10 +22,11 @@ margin_bottom = -500.0
 rect_min_size = Vector2( 100, 100 )
 script = ExtResource( 2 )
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Panel" type="Panel" parent="."]
 margin_right = 100.0
 margin_bottom = 100.0
-color = Color( 0.933333, 0.894118, 0.854902, 1 )
+rect_min_size = Vector2( 100, 100 )
+custom_styles/panel = SubResource( 2 )
 
 [node name="TextContainer" type="CenterContainer" parent="."]
 margin_top = 1.0

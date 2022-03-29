@@ -21,4 +21,6 @@ margin_left = 512.0
 margin_top = 300.0
 margin_right = 512.0
 margin_bottom = 300.0
+custom_constants/vseparation = 8
+custom_constants/hseparation = 8
 columns = 4
