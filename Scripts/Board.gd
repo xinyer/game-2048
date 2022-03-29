@@ -3,47 +3,65 @@ extends ColorRect
 const width = 4
 const height = 4
 
-const empty = [[0, 0, 0, 0],
-			  [0, 0, 0, 0],
-			  [0, 0, 0, 0],
-			  [0, 0, 0, 0]]
-
 const tile = preload("res://Tile.tscn")
 var random = RandomNumberGenerator.new()
 var nodes: Array = []
-var board: Array
+var board: Array = [
+	[0, 0, 0, 0],
+	[0, 0, 0, 0],
+	[0, 0, 0, 0],
+	[0, 0, 0, 0]
+]
 
 func _ready():
-	board = empty.duplicate(true)
 	random.randomize()
 	init_board()
+	new_tile(2)
 	new_tile()
 	update_board()
+	
+func _process(delta):
+	if Input.is_action_just_pressed("ui_left"):
+		pass
+	elif Input.is_action_just_pressed("ui_right"):
+		pass
+	elif Input.is_action_just_pressed("ui_up"):
+		pass
+	elif Input.is_action_just_pressed("ui_down"):
+		pass	
 	
 func init_board():
 	for n in range(0, width * height):
 		var node = tile.instance()
 		node.set_value(0)
-		nodes.push_front(node)
+		nodes.push_back(node)
 		$Container/Grid.add_child(node)
 
 func update_board():
 	for i in range(0, width * height):
-		nodes[width * height - (i + 1)].set_value(board[floor(i / width)][i % height])
-	pass
+		nodes[i].set_value(board[floor(i / width)][i % height])
 	
-func new_tile():
+func new_tile(value: int = 0):
 	var position = create_random_position()
-	while(is_occupied(position)):
-		position = create_random_position()
-		pass
-	set_element(position, 2)
+	var i = value
+	if value == 0: i = create_random_value()
+	set_element(position, i)
 	
 func create_random_position() -> Vector2:
-	return Vector2(
+	var position = Vector2(
 		random.randi_range(0, width - 1),
 		random.randi_range(0, height - 1)
 	)
+	while(is_occupied(position)):
+		position = create_random_position()
+		pass
+	return position
+
+func create_random_value():
+	if random.randi_range(0, 100) > 50:
+		return 2
+	else:
+		return 4
 	
 func is_occupied(pos:Vector2) -> bool:
 	return get_element(pos) > 0
