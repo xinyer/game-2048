@@ -1,17 +1,11 @@
 extends ColorRect
 
-const width = 4
-const height = 4
-
+const SIZE = 4
 const tile = preload("res://Tile.tscn")
+
 var random = RandomNumberGenerator.new()
-var nodes: Array = []
-var board: Array = [
-	[0, 0, 0, 0],
-	[0, 0, 0, 0],
-	[0, 0, 0, 0],
-	[0, 0, 0, 0]
-]
+var tiles: Array = []
+var board: Array = [[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0]]
 
 func _ready():
 	random.randomize()
@@ -22,45 +16,38 @@ func _ready():
 	
 func _process(delta):
 	if Input.is_action_just_pressed("ui_left"):
-		for line in board:
-			line.invert()
-			slide(line)
-			line.invert()
-		update_board()
-		new_tile()
-		pass
+		slide_left()
 	elif Input.is_action_just_pressed("ui_right"):
-		for line in board:
-			slide(line)
-		update_board()
-		new_tile()	
+		slide_right()
 	elif Input.is_action_just_pressed("ui_up"):
-		pass
+		slide_up()
 	elif Input.is_action_just_pressed("ui_down"):
-		pass	
+		slide_down()
 	
 func init_board():
-	for n in range(0, width * height):
+	for _n in range(0, SIZE * SIZE):
 		var node = tile.instance()
 		node.set_value(0)
-		nodes.push_back(node)
+		tiles.push_back(node)
 		$Container/Grid.add_child(node)
 
 func update_board():
-	for i in range(0, width * height):
-		nodes[i].set_value(board[floor(i / width)][i % height])
+	for i in range(0, SIZE * SIZE):
+		var value = board[floor(i / SIZE)][i % SIZE]
+		tiles[i].set_value(value)
 	
 func new_tile(value: int = 0):
 	var position = create_random_position()
 	var i = value
-	if value == 0: i = create_random_value()
+	if value == 0:
+		i = create_random_value()
 	set_element(position, i)
 	update_board()
 	
 func create_random_position() -> Vector2:
 	var position = Vector2(
-		random.randi_range(0, width - 1),
-		random.randi_range(0, height - 1)
+		random.randi_range(0, SIZE - 1),
+		random.randi_range(0, SIZE - 1)
 	)
 	while(is_occupied(position)):
 		position = create_random_position()
@@ -81,10 +68,15 @@ func get_element(pos:Vector2) -> int:
 
 func set_element(pos: Vector2, value: int):
 	board[pos.x][pos.y] = value
-	
+
+# slide to right, plus two values if same
+#
+# [0, 0, 2, 0] -> [0, 0, 0, 2]
+# [0, 2, 0, 2] -> [0, 0, 0, 4]
+#
 func slide(line: Array):
-	for n in range(1, 4):
-		var i = width - 2
+	for _n in range(1, SIZE):
+		var i = SIZE - 2
 		while i >= 0:
 			if line[i + 1] == 0:
 				line[i + 1] = line[i]
@@ -93,3 +85,73 @@ func slide(line: Array):
 				line[i + 1] = line[i + 1] * 2
 				line[i] = 0
 			i = i - 1
+
+# rotate 90 degrees clockwise
+#
+#	[ 0, 1, 2, 3]
+#	[ 4, 5, 6, 7]
+#	[ 8, 9,10,11]
+#	[12,13,14,15]
+# to
+#	[12, 8, 4, 0]
+#	[13, 9, 5, 1]
+#	[14,10, 6, 2]
+#	[15,11, 7, 3]
+#
+func rotate_90_clockwise(array: Array) -> Array:
+	var result = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+	for i in range(0, SIZE):
+		for j in range(0, SIZE):
+			result[i][j] = array[SIZE - 1 -j][i]
+	return result
+
+# rotate 90 degrees counterclockwise
+#
+#	[ 0, 1, 2, 3]
+#	[ 4, 5, 6, 7]
+#	[ 8, 9,10,11]
+#	[12,13,14,15]
+# to
+#	[3, 7,11,15]
+#	[2, 6,10,14]
+#	[1, 5, 9,13]
+#	[0, 4, 8,12]
+#
+func rotate_90_counterclockwise(array: Array) -> Array:
+	var result = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+	for i in range(0, SIZE):
+		for j in range(0, SIZE):
+			result[i][j] = array[j][SIZE - 1 - i]
+	return result
+
+func slide_right():
+	for line in board:
+		slide(line)
+	update_board()
+	new_tile()
+
+func slide_left():
+	for line in board:
+		line.invert()
+		slide(line)
+		line.invert()
+	update_board()
+	new_tile()
+
+func slide_up():
+	var array = rotate_90_clockwise(board)
+	for line in array:
+		slide(line)
+	board = rotate_90_counterclockwise(array)
+	update_board()
+	new_tile()
+	
+func slide_down():
+	var array = rotate_90_clockwise(board)
+	for line in array:
+		line.invert()
+		slide(line)
+		line.invert()
+	board = rotate_90_counterclockwise(array)
+	update_board()
+	new_tile()
