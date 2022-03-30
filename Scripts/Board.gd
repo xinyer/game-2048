@@ -123,35 +123,43 @@ func rotate_90_counterclockwise(array: Array) -> Array:
 		for j in range(0, SIZE):
 			result[i][j] = array[j][SIZE - 1 - i]
 	return result
-
+	
 func slide_right():
+	var before = board.duplicate(true)
 	for line in board:
 		slide(line)
-	update_board()
-	new_tile()
+	if before != board:
+		update_board()
+		new_tile()
 
 func slide_left():
+	var before = board.duplicate(true)
 	for line in board:
 		line.invert()
 		slide(line)
 		line.invert()
-	update_board()
-	new_tile()
+	if before != board:
+		update_board()
+		new_tile()
 
 func slide_up():
+	var before = board.duplicate(true)
 	var array = rotate_90_clockwise(board)
 	for line in array:
 		slide(line)
 	board = rotate_90_counterclockwise(array)
-	update_board()
-	new_tile()
+	if before != board:
+		update_board()
+		new_tile()
 	
 func slide_down():
+	var before = board.duplicate(true)
 	var array = rotate_90_clockwise(board)
 	for line in array:
 		line.invert()
 		slide(line)
 		line.invert()
 	board = rotate_90_counterclockwise(array)
-	update_board()
-	new_tile()
+	if before != board:
+		update_board()
+		new_tile()
