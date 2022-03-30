@@ -1,11 +1,14 @@
-extends ColorRect
+extends Panel
+
+signal game_over
 
 const SIZE = 4
 const tile = preload("res://Tile.tscn")
+const EMPTY = [[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0]]
 
 var random = RandomNumberGenerator.new()
 var tiles: Array = []
-var board: Array = [[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0]]
+var board: Array
 
 func _ready():
 	random.randomize()
@@ -25,6 +28,7 @@ func _process(delta):
 		slide_down()
 	
 func init_board():
+	board = EMPTY.duplicate()
 	for _n in range(0, SIZE * SIZE):
 		var node = tile.instance()
 		node.set_value(0)
@@ -43,6 +47,8 @@ func new_tile(value: int = 0):
 		i = create_random_value()
 	set_element(position, i)
 	update_board()
+	if is_game_over():
+		emit_signal("game_over")
 	
 func create_random_position() -> Vector2:
 	var position = Vector2(
@@ -118,7 +124,7 @@ func rotate_90_clockwise(array: Array) -> Array:
 #	[0, 4, 8,12]
 #
 func rotate_90_counterclockwise(array: Array) -> Array:
-	var result = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+	var result = EMPTY.duplicate()
 	for i in range(0, SIZE):
 		for j in range(0, SIZE):
 			result[i][j] = array[j][SIZE - 1 - i]
@@ -163,3 +169,22 @@ func slide_down():
 	if before != board:
 		update_board()
 		new_tile()
+
+func is_game_over() -> bool:
+	# row
+	for line in board:
+		if line.has(0):
+			return false
+		else:
+			for i in range(0, SIZE - 2):
+				if line[i] == line[i + 1]:
+					return false
+	# column
+	for line in rotate_90_clockwise(board):
+		if line.has(0):
+			return false
+		else:
+			for i in range(0, SIZE - 2):
+				if line[i] == line[i + 1]:
+					return false
+	return true

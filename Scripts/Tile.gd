@@ -13,5 +13,5 @@ func set_value(value: int) -> void:
 #		$Background.color = defaultColor
 	else:
 		$TextContainer/Label.text = str(value)
-		$TextContainer/Label.get_font("font").size = 48
+#		$TextContainer/Label.get_font("font").size = 24
 		# TODO: change color by the value
