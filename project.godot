@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Resource",
+"class": "Data",
+"language": "GDScript",
+"path": "res://Scripts/Data.gd"
+} ]
+_global_script_class_icons={
+"Data": ""
+}
+
 [application]
 
 config/name="2048"

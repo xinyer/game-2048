@@ -5,15 +5,18 @@ signal score
 
 const SIZE = 4
 const tile = preload("res://Tile.tscn")
-const EMPTY = [[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0]]
 
 var random = RandomNumberGenerator.new()
 var tiles: Array = []
-var board: Array
+var board: Array = [[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0]]
 
 func _ready():
 	random.randomize()
 	init_board()
+	start()
+	
+func start():
+	clear_board()
 	new_tile(2)
 	new_tile()
 	update_board()
@@ -29,7 +32,6 @@ func _process(delta):
 		slide_down()
 	
 func init_board():
-	board = EMPTY.duplicate()
 	for _n in range(0, SIZE * SIZE):
 		var node = tile.instance()
 		node.set_value(0)
@@ -40,6 +42,11 @@ func update_board():
 	for i in range(0, SIZE * SIZE):
 		var value = board[floor(i / SIZE)][i % SIZE]
 		tiles[i].set_value(value)
+
+func clear_board():
+	for i in range(0, SIZE):
+		for j in range(0, SIZE):
+			board[i][j] = 0
 	
 func new_tile(value: int = 0):
 	var position = create_random_position()
@@ -127,7 +134,7 @@ func rotate_90_clockwise(array: Array) -> Array:
 #	[0, 4, 8,12]
 #
 func rotate_90_counterclockwise(array: Array) -> Array:
-	var result = EMPTY.duplicate()
+	var result = [[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0]]
 	for i in range(0, SIZE):
 		for j in range(0, SIZE):
 			result[i][j] = array[j][SIZE - 1 - i]

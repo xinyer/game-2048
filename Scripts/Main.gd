@@ -2,13 +2,17 @@ extends Control
 
 
 func _ready():
-	pass
+	$Container/ScoreContainer/BestScore.set_score(Global.get_best_score())
 
 func _on_NewGame_pressed():
-	pass
+	Global.reset()
+	$Container/ScoreContainer/CurrentScore.set_score(Global.score)
+	$Container/Board.start()
 
 func _on_Board_game_over():
 	$GameOver.show()
+	Global.save_best_score()
+	$Container/ScoreContainer/BestScore.set_score(Global.get_best_score())
 
 
 func _on_Board_score():
