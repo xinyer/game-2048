@@ -29,8 +29,9 @@ tracks/0/keys = {
 "values": [ Vector2( 0.6, 0.6 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=4]
-length = 0.001
+[sub_resource type="Animation" id=5]
+resource_name = "Join"
+step = 0.03
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_scale")
 tracks/0/interp = 1
@@ -38,10 +39,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.15, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ) ]
+"values": [ Vector2( 1, 1 ), Vector2( 1.2, 1.2 ), Vector2( 1, 1 ) ]
 }
 
 [node name="Tile" type="Control"]
@@ -77,4 +78,4 @@ valign = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Enter = SubResource( 3 )
-anims/RESET = SubResource( 4 )
+anims/Join = SubResource( 5 )

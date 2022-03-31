@@ -53,14 +53,11 @@ func clear_board():
 func new_tile(value: int = 0):
 	var position = create_random_position()
 	var i = value
-	if value == 0:
-		i = create_random_value()
+	if value == 0: i = create_random_value()
 	set_element(position, i)
-	print(position)
 	get_tile(position).play_enter_animation()
 	update_board()
-	if is_game_over():
-		emit_signal("game_over")
+	if is_game_over(): emit_signal("game_over")
 
 func create_random_position() -> Vector2:
 	var position = Vector2(
@@ -152,6 +149,7 @@ func slide_right():
 	for line in board:
 		slide(line)
 	if before != board:
+		play_join_animation(before, board)
 		update_board()
 		new_tile()
 
@@ -162,6 +160,7 @@ func slide_left():
 		slide(line)
 		line.invert()
 	if before != board:
+		play_join_animation(before, board)
 		update_board()
 		new_tile()
 
@@ -172,6 +171,7 @@ func slide_up():
 		slide(line)
 	board = rotate_90_counterclockwise(array)
 	if before != board:
+		play_join_animation(before, board)
 		update_board()
 		new_tile()
 
@@ -184,6 +184,7 @@ func slide_down():
 		line.invert()
 	board = rotate_90_counterclockwise(array)
 	if before != board:
+		play_join_animation(before, board)
 		update_board()
 		new_tile()
 
@@ -205,3 +206,10 @@ func is_game_over() -> bool:
 				if line[i] == line[i + 1]:
 					return false
 	return true
+
+func play_join_animation(before: Array, after: Array):
+	for i in range(0, SIZE):
+		for j in range(0, SIZE):
+			if before[i][j] != 0 && before[i][j] * 2 == after[i][j]:
+				get_tile(Vector2(i, j)).play_join_animation()
+	pass
