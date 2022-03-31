@@ -7,7 +7,7 @@ func _ready():
 func _on_NewGame_pressed():
 	Global.reset()
 	$Container/ScoreContainer/CurrentScore.set_score(Global.score)
-	$Container/Board.start()
+	$Container/Board.restart()
 
 func _on_Board_game_over():
 	$GameOver.show()

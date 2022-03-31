@@ -14,13 +14,16 @@ func _ready():
 	random.randomize()
 	init_board()
 	start()
-	
+
 func start():
-	clear_board()
 	new_tile(2)
 	new_tile()
 	update_board()
-	
+
+func restart():
+	clear_board()
+	start()
+
 func _process(delta):
 	if Input.is_action_just_pressed("ui_left"):
 		slide_left()
@@ -30,11 +33,10 @@ func _process(delta):
 		slide_up()
 	elif Input.is_action_just_pressed("ui_down"):
 		slide_down()
-	
+
 func init_board():
 	for _n in range(0, SIZE * SIZE):
 		var node = tile.instance()
-		node.set_value(0)
 		tiles.push_back(node)
 		$Container/Grid.add_child(node)
 
@@ -47,17 +49,19 @@ func clear_board():
 	for i in range(0, SIZE):
 		for j in range(0, SIZE):
 			board[i][j] = 0
-	
+
 func new_tile(value: int = 0):
 	var position = create_random_position()
 	var i = value
 	if value == 0:
 		i = create_random_value()
 	set_element(position, i)
+	print(position)
+	get_tile(position).play_enter_animation()
 	update_board()
 	if is_game_over():
 		emit_signal("game_over")
-	
+
 func create_random_position() -> Vector2:
 	var position = Vector2(
 		random.randi_range(0, SIZE - 1),
@@ -82,6 +86,9 @@ func get_element(pos:Vector2) -> int:
 
 func set_element(pos: Vector2, value: int):
 	board[pos.x][pos.y] = value
+
+func get_tile(pos: Vector2) -> Tile:
+	return tiles[pos.x * SIZE + pos.y]
 
 # slide to right, plus two values if same
 #
@@ -139,7 +146,7 @@ func rotate_90_counterclockwise(array: Array) -> Array:
 		for j in range(0, SIZE):
 			result[i][j] = array[j][SIZE - 1 - i]
 	return result
-	
+
 func slide_right():
 	var before = board.duplicate(true)
 	for line in board:
@@ -167,7 +174,7 @@ func slide_up():
 	if before != board:
 		update_board()
 		new_tile()
-	
+
 func slide_down():
 	var before = board.duplicate(true)
 	var array = rotate_90_clockwise(board)

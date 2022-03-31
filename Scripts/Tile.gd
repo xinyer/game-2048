@@ -1,5 +1,7 @@
 extends Control
 
+class_name Tile
+
 var defaultColor: Color = Color("#eee4da")
 
 func _ready():
@@ -15,3 +17,6 @@ func set_value(value: int) -> void:
 		$TextContainer/Label.text = str(value)
 #		$TextContainer/Label.get_font("font").size = 24
 		# TODO: change color by the value
+
+func play_enter_animation():
+	$AnimationPlayer.play("Enter")

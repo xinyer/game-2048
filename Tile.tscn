@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Fonts/OpenSans-Bold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/Tile.gd" type="Script" id=2]
@@ -14,12 +14,43 @@ corner_radius_bottom_left = 4
 size = 32
 font_data = ExtResource( 1 )
 
+[sub_resource type="Animation" id=3]
+resource_name = "Enter"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.6, 0.6 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+
 [node name="Tile" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = -924.0
 margin_bottom = -500.0
 rect_min_size = Vector2( 100, 100 )
+rect_pivot_offset = Vector2( 50, 50 )
 script = ExtResource( 2 )
 
 [node name="Panel" type="Panel" parent="."]
@@ -43,3 +74,7 @@ custom_fonts/font = SubResource( 1 )
 text = "2048"
 align = 1
 valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Enter = SubResource( 3 )
+anims/RESET = SubResource( 4 )
