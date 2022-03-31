@@ -114,3 +114,4 @@ margin_bottom = -32.0
 
 [connection signal="pressed" from="Container/NewGame" to="." method="_on_NewGame_pressed"]
 [connection signal="game_over" from="Container/Board" to="." method="_on_Board_game_over"]
+[connection signal="score" from="Container/Board" to="." method="_on_Board_score"]

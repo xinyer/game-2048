@@ -1,6 +1,7 @@
 extends Panel
 
 signal game_over
+signal score
 
 const SIZE = 4
 const tile = preload("res://Tile.tscn")
@@ -90,6 +91,8 @@ func slide(line: Array):
 			elif line[i + 1] == line[i]:
 				line[i + 1] = line[i + 1] * 2
 				line[i] = 0
+				Global.score(line[i + 1])
+				emit_signal("score")
 			i = i - 1
 
 # rotate 90 degrees clockwise
