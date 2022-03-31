@@ -73,7 +73,7 @@ func create_random_position() -> Vector2:
 	return position
 
 func create_random_value():
-	if random.randi_range(0, 100) > 50:
+	if random.randi_range(0, 100) < 70:
 		return 2
 	else:
 		return 4

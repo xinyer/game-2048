@@ -93,7 +93,7 @@ margin_bottom = 41.0
 title = "BEST"
 
 [node name="NewGame" type="Button" parent="Container"]
-margin_left = 651.0
+margin_left = 624.0
 margin_top = 74.0
 margin_right = 731.0
 margin_bottom = 106.0
