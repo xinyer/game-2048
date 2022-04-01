@@ -35,3 +35,4 @@ columns = 4
 
 [node name="JoinAudioPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
+volume_db = -5.0
