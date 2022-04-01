@@ -91,20 +91,24 @@ func get_tile(pos: Vector2) -> Tile:
 #
 # [0, 0, 2, 0] -> [0, 0, 0, 2]
 # [0, 2, 0, 2] -> [0, 0, 0, 4]
+# [2, 2, 0, 4] -> [0, 0, 4, 4]
 #
 func slide(line: Array):
+	var joined = false
 	for _n in range(1, SIZE):
 		var i = SIZE - 2
 		while i >= 0:
 			if line[i + 1] == 0:
 				line[i + 1] = line[i]
 				line[i] = 0
-			elif line[i + 1] == line[i]:
+			elif line[i + 1] == line[i] && !joined:
 				line[i + 1] = line[i + 1] * 2
 				line[i] = 0
+				joined = true
 				Global.score(line[i + 1])
 				emit_signal("score")
-			i = i - 1
+			i -= 1
+	pass
 
 # rotate 90 degrees clockwise
 #
