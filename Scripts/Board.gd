@@ -87,13 +87,14 @@ func set_element(pos: Vector2, value: int):
 func get_tile(pos: Vector2) -> Tile:
 	return tiles[pos.x * SIZE + pos.y]
 
-# slide to right, plus two values if same
+# slide to right, plus two values if same, join once every slide
 #
 # [0, 0, 2, 0] -> [0, 0, 0, 2]
 # [0, 2, 0, 2] -> [0, 0, 0, 4]
 # [2, 2, 0, 4] -> [0, 0, 4, 4]
 #
-func slide(line: Array):
+func slide(line: Array) -> int:
+	var position = -1
 	var joined = false
 	for _n in range(1, SIZE):
 		var i = SIZE - 2
@@ -105,10 +106,11 @@ func slide(line: Array):
 				line[i + 1] = line[i + 1] * 2
 				line[i] = 0
 				joined = true
+				position = i + 1
 				Global.score(line[i + 1])
 				emit_signal("score")
 			i -= 1
-	pass
+	return position
 
 # rotate 90 degrees clockwise
 #
@@ -150,45 +152,54 @@ func rotate_90_counterclockwise(array: Array) -> Array:
 
 func slide_right():
 	var before = board.duplicate(true)
-	for line in board:
-		slide(line)
+	for i in range(0, SIZE):
+		var line = board[i]
+		var join = slide(line)
+		if join >= 0:
+			play_join_animation(Vector2(i, join))
 	if before != board:
-		play_join_animation(before, board)
 		update_board()
 		new_tile()
 
 func slide_left():
 	var before = board.duplicate(true)
-	for line in board:
+	for i in range(0, SIZE):
+		var line = board[i]
 		line.invert()
-		slide(line)
+		var join = slide(line)
 		line.invert()
+		if join >= 0:
+			play_join_animation(Vector2(i, SIZE - 1 -join))
 	if before != board:
-		play_join_animation(before, board)
 		update_board()
 		new_tile()
 
 func slide_up():
 	var before = board.duplicate(true)
 	var array = rotate_90_clockwise(board)
-	for line in array:
-		slide(line)
+	for i in range(0, SIZE):
+		var line = array[i]
+		var join = slide(line)
+		if join >= 0:
+			play_join_animation(Vector2(SIZE - 1 - join, i))
 	board = rotate_90_counterclockwise(array)
+	
 	if before != board:
-		play_join_animation(before, board)
 		update_board()
 		new_tile()
 
 func slide_down():
 	var before = board.duplicate(true)
 	var array = rotate_90_clockwise(board)
-	for line in array:
+	for i in range(0, SIZE):
+		var line = array[i]
 		line.invert()
-		slide(line)
+		var join = slide(line)
 		line.invert()
+		if join >= 0:
+			play_join_animation(Vector2(join, i))
 	board = rotate_90_counterclockwise(array)
 	if before != board:
-		play_join_animation(before, board)
 		update_board()
 		new_tile()
 
@@ -211,9 +222,5 @@ func is_game_over() -> bool:
 					return false
 	return true
 
-func play_join_animation(before: Array, after: Array):
-	for i in range(0, SIZE):
-		for j in range(0, SIZE):
-			if before[i][j] != 0 && before[i][j] * 2 == after[i][j]:
-				get_tile(Vector2(i, j)).play_join_animation()
-	pass
+func play_join_animation(position: Vector2):
+	get_tile(position).play_join_animation()
