@@ -1,7 +1,9 @@
 extends Node
 
+const WIN = 65536
+const FILE = "user://data.res"
+
 var score: int = 0
-var FILE = "user://data.res"
 
 func score(value: int):
 	score += value

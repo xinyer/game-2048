@@ -2,7 +2,6 @@ extends Popup
 
 signal start_again
 
-
 func _ready():
 	pass
 

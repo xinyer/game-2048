@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scenes/Board.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Fonts/OpenSans-Bold.ttf" type="DynamicFontData" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scenes/Score.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/Main.gd" type="Script" id=5]
 [ext_resource path="res://Scenes/GameOver.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/GameWin.tscn" type="PackedScene" id=7]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.980392, 0.972549, 0.937255, 1 )
@@ -108,7 +109,11 @@ margin_bottom = -32.0
 
 [node name="GameOver" parent="." instance=ExtResource( 6 )]
 
+[node name="GameWin" parent="." instance=ExtResource( 7 )]
+
 [connection signal="pressed" from="Container/NewGame" to="." method="_on_NewGame_pressed"]
 [connection signal="game_over" from="Container/Board" to="." method="_on_Board_game_over"]
+[connection signal="game_win" from="Container/Board" to="." method="_on_Board_game_win"]
 [connection signal="score" from="Container/Board" to="." method="_on_Board_score"]
 [connection signal="start_again" from="GameOver" to="." method="_on_GameOver_start_again"]
+[connection signal="restart" from="GameWin" to="." method="_on_GameWin_restart"]

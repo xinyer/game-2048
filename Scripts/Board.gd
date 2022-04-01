@@ -1,6 +1,7 @@
 extends Panel
 
 signal game_over
+signal game_win
 signal score
 
 const SIZE = 4
@@ -44,6 +45,7 @@ func update_board():
 	for i in range(0, SIZE * SIZE):
 		var value = board[floor(i / SIZE)][i % SIZE]
 		tiles[i].set_value(value)
+	win_game()
 
 func clear_board():
 	for i in range(0, SIZE):
@@ -225,3 +227,11 @@ func is_game_over() -> bool:
 
 func play_join_animation(position: Vector2):
 	get_tile(position).play_join_animation()
+
+func win_game():
+	for i in range(0, SIZE):
+		for j in range(0, SIZE):
+			if board[i][j] == Global.WIN:
+				emit_signal("game_win")
+				break
+	pass
