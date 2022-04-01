@@ -4,7 +4,7 @@ signal game_over
 signal score
 
 const SIZE = 4
-const tile = preload("res://Tile.tscn")
+const tile = preload("res://Scenes/Tile.tscn")
 
 var random = RandomNumberGenerator.new()
 var tiles: Array = []
