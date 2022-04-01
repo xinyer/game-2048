@@ -108,6 +108,7 @@ func slide(line: Array) -> int:
 				joined = true
 				position = i + 1
 				Global.score(line[i + 1])
+				$JoinAudioPlayer.play()
 				emit_signal("score")
 			i -= 1
 	return position

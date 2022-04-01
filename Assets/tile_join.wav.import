@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/tile_join.wav-e18fa6dba94b6fbdcb318b0ff120b9d1.sample"
+
+[deps]
+
+source_file="res://Assets/tile_join.wav"
+dest_files=[ "res://.import/tile_join.wav-e18fa6dba94b6fbdcb318b0ff120b9d1.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
