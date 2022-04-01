@@ -79,17 +79,13 @@ margin_right = 732.0
 margin_bottom = 65.0
 
 [node name="CurrentScore" parent="Container/ScoreContainer" instance=ExtResource( 4 )]
-margin_left = 0.0
-margin_top = 0.0
-margin_right = 80.0
-margin_bottom = 41.0
+margin_bottom = 44.0
 title = "SCORE"
 
 [node name="BestScore" parent="Container/ScoreContainer" instance=ExtResource( 4 )]
 margin_left = 84.0
-margin_top = 0.0
 margin_right = 164.0
-margin_bottom = 41.0
+margin_bottom = 44.0
 title = "BEST"
 
 [node name="NewGame" type="Button" parent="Container"]
@@ -115,3 +111,4 @@ margin_bottom = -32.0
 [connection signal="pressed" from="Container/NewGame" to="." method="_on_NewGame_pressed"]
 [connection signal="game_over" from="Container/Board" to="." method="_on_Board_game_over"]
 [connection signal="score" from="Container/Board" to="." method="_on_Board_score"]
+[connection signal="start_again" from="GameOver" to="." method="_on_GameOver_start_again"]
