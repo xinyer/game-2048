@@ -135,7 +135,6 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [node name="GameWin" type="Popup"]
-visible = true
 margin_right = 1024.0
 margin_bottom = 600.0
 script = ExtResource( 2 )
