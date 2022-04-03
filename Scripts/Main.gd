@@ -1,6 +1,5 @@
 extends Control
 
-
 func _ready():
 	$Container/ScoreContainer/BestScore.set_score(Global.get_best_score())
 
@@ -9,10 +8,8 @@ func start_game():
 	$Container/ScoreContainer/CurrentScore.set_score(Global.score)
 	$Container/Board.restart()
 
-
 func _on_NewGame_pressed():
-#	start_game()
-	$GameWin.show()
+	start_game()
 
 func _on_Board_game_over():
 	$GameOver.show()
@@ -30,4 +27,3 @@ func _on_GameOver_start_again():
 
 func _on_GameWin_restart():
 	start_game()
-
