@@ -59,7 +59,7 @@ func new_tile(value: int = 0):
 	set_element(position, i)
 	get_tile(position).play_enter_animation()
 	update_board()
-	if is_game_over(): emit_signal("game_over")
+	game_over()
 
 func create_random_position() -> Vector2:
 	var position = Vector2(
@@ -206,24 +206,31 @@ func slide_down():
 		update_board()
 		new_tile()
 
-func is_game_over() -> bool:
+func game_over():
+	var isRowOver = true
 	# row
 	for line in board:
 		if line.has(0):
-			return false
+			isRowOver = false
+			break
 		else:
 			for i in range(0, SIZE - 2):
 				if line[i] == line[i + 1]:
-					return false
+					isRowOver = false
+					break
 	# column
+	var isColumnOver = true
 	for line in rotate_90_clockwise(board):
 		if line.has(0):
-			return false
+			isColumnOver = false
+			break
 		else:
 			for i in range(0, SIZE - 2):
 				if line[i] == line[i + 1]:
-					return false
-	return true
+					isColumnOver = false
+					break
+	if isRowOver || isColumnOver:
+		emit_signal("game_over")
 
 func play_join_animation(position: Vector2):
 	get_tile(position).play_join_animation()
