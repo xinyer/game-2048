@@ -214,7 +214,7 @@ func game_over():
 			isRowOver = false
 			break
 		else:
-			for i in range(0, SIZE - 2):
+			for i in range(0, SIZE - 1):
 				if line[i] == line[i + 1]:
 					isRowOver = false
 					break
@@ -225,7 +225,7 @@ func game_over():
 			isColumnOver = false
 			break
 		else:
-			for i in range(0, SIZE - 2):
+			for i in range(0, SIZE - 1):
 				if line[i] == line[i + 1]:
 					isColumnOver = false
 					break
