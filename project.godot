@@ -34,6 +34,15 @@ config/icon="res://icon.png"
 
 Global="*res://Scripts/Global.gd"
 
+[display]
+
+window/size/width=480
+window/size/height=1040
+window/dpi/allow_hidpi=true
+window/handheld/orientation="portrait"
+window/stretch/mode="2d"
+window/stretch/aspect="expand"
+
 [global]
 
 main=false

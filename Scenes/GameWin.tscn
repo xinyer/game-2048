@@ -74,7 +74,7 @@ vec3 explosion(vec2 uv, vec2 p, float seed, float t) {
 
 
 void fragment() {
-    vec2 iResolution = vec2(1024,600);
+    vec2 iResolution = vec2(480,1040);
 	vec2 uv = FRAGCOORD.xy / iResolution.xy;
                 uv.x -= .5;
     uv.x *= iResolution.x/iResolution.y;
@@ -135,20 +135,23 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [node name="GameWin" type="Popup"]
-margin_right = 1024.0
-margin_bottom = 600.0
+visible = true
+margin_right = 480.0
+margin_bottom = 1040.0
 script = ExtResource( 2 )
 
 [node name="FireWorks" type="Panel" parent="."]
 material = SubResource( 15 )
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_right = 480.0
+margin_bottom = 1040.0
 
 [node name="ContentLabel" type="Label" parent="."]
-margin_left = 352.0
-margin_top = 200.0
-margin_right = 672.0
-margin_bottom = 371.0
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -160.0
+margin_top = 420.0
+margin_right = 160.0
+margin_bottom = 591.0
 custom_colors/font_color = Color( 0.466667, 0.431373, 0.396078, 1 )
 custom_fonts/font = SubResource( 11 )
 text = "65536
@@ -159,10 +162,12 @@ valign = 1
 
 [node name="RestartButton" type="Button" parent="."]
 visible = false
-margin_left = 432.0
-margin_top = 420.0
-margin_right = 592.0
-margin_bottom = 460.0
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -80.0
+margin_top = 640.0
+margin_right = 80.0
+margin_bottom = 680.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = SubResource( 9 )
 custom_styles/hover = SubResource( 13 )
@@ -171,7 +176,7 @@ custom_styles/normal = SubResource( 10 )
 text = "Restart"
 
 [node name="RestartTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 8.0
 one_shot = true
 autostart = true
 

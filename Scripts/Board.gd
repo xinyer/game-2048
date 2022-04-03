@@ -235,3 +235,13 @@ func win_game():
 				emit_signal("game_win")
 				break
 	pass
+
+func _on_SwipeDetector_swiped(direction):
+	if direction == Vector2(1, 0):
+		slide_left()
+	elif direction == Vector2(-1, 0):
+		slide_right()
+	elif direction == Vector2(0, 1):
+		slide_up()
+	elif direction == Vector2(0, -1):
+		slide_down()

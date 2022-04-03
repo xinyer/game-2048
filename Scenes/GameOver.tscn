@@ -29,20 +29,23 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [node name="GameOver" type="Popup"]
-margin_right = 1024.0
-margin_bottom = 600.0
+visible = true
+margin_right = 480.0
+margin_bottom = 1040.0
 script = ExtResource( 4 )
 
 [node name="Background" type="ColorRect" parent="."]
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_right = 480.0
+margin_bottom = 1040.0
 color = Color( 1, 1, 1, 0.490196 )
 
 [node name="ContentLabel" type="Label" parent="."]
-margin_left = 392.0
-margin_top = 280.0
-margin_right = 632.0
-margin_bottom = 335.0
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -120.0
+margin_top = 420.0
+margin_right = 120.0
+margin_bottom = 475.0
 custom_colors/font_color = Color( 0.466667, 0.431373, 0.396078, 1 )
 custom_fonts/font = SubResource( 11 )
 text = "GAME OVER!"
@@ -50,10 +53,12 @@ align = 1
 valign = 1
 
 [node name="StartAgainButton" type="Button" parent="."]
-margin_left = 432.0
-margin_top = 360.0
-margin_right = 592.0
-margin_bottom = 400.0
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -50.0
+margin_top = 500.0
+margin_right = 50.0
+margin_bottom = 540.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = SubResource( 9 )
 custom_styles/hover = SubResource( 13 )

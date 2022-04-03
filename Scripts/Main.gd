@@ -11,7 +11,8 @@ func start_game():
 
 
 func _on_NewGame_pressed():
-	start_game()
+#	start_game()
+	$GameWin.show()
 
 func _on_Board_game_over():
 	$GameOver.show()
