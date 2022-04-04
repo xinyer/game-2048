@@ -6,4 +6,4 @@ You can play this game by this [link](https://xinyer.github.io/game_2048.html).
 
 ## Screenshots
 
-![](Screenshots/screenshot.jpg)
+![](Screenshots/screenshot.png)
