@@ -229,7 +229,8 @@ func game_over():
 				if line[i] == line[i + 1]:
 					isColumnOver = false
 					break
-	if isRowOver || isColumnOver:
+	
+	if isRowOver && isColumnOver:
 		emit_signal("game_over")
 
 func play_join_animation(position: Vector2):
